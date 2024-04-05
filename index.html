@@ -36,6 +36,8 @@
   }
 
   .logo {
+    display: flex;
+    align-items: center;
     font-size: 1.8rem;
     color: rgb(4, 92, 172);
     padding-left: 20px;
@@ -147,7 +149,7 @@
       object-fit: contain;
     }
     @media screen and (min-width: 1400px) {
-      .grp-carousel img {
+    .grp-carousel img {
       height: 320px;
       }
     }
@@ -297,7 +299,21 @@
   .grp-quicklinks{
     max-height: 380px;
     overflow-y: auto;
-    padding: 0px 5px;
+    /* padding: 0px 5px; */
+    /* margin: 5px 0px; */
+    margin-right: 5px;
+
+  }
+  .grp-quicklinks::-webkit-scrollbar {
+    width: 12px; /* Adjust scrollbar width as needed */
+  }
+  .grp-quicklinks::-webkit-scrollbar-track {
+    /* background: #f4f4f4; */
+    background: transparent;
+  }
+  .grp-quicklinks::-webkit-scrollbar-thumb {
+    background: #888; /* Thumb color */
+    border-radius: 10px;
   }
   .grp-carousel-container-header{
     border: 0.666667px solid rgba(0, 0, 0, 0.176);
@@ -527,9 +543,12 @@
         max-width: 478px;
       }
     }
-    @media screen and (min-width: 769px) and (max-width: 991px) {
+    @media screen and (min-width: 786px) and (max-width: 991px) {
       .grp-scroll-container {
-        max-width: 628px;
+        max-width: 638px;
+      }
+      .scroll-btn{
+        padding: 12px;
       }
     }
     @media screen and (min-width: 992px) {
@@ -557,7 +576,7 @@
 <body>
 <header>
   <nav class="grp-nav">
-    <a href="/" class="logo">Sonic</a>
+    <a href="/" class="logo"><img src="./images/Sonic-logo.jpg" width="36" height="36"></a>
     <!-- <i class="fa fa-bars" id="menu-bar" aria-hidden="true"></i>  -->
     <div class="grp-container" id="menu-bar" onclick="myFunction(this)">
       <div class="bar1"></div>
@@ -584,9 +603,8 @@
   <div class="grp-indicators-wrap">
 <div class="grp-carousel-container">
   <div class="grp-carousel">
-    <!-- <img src="./image/Final_Poster.jpg" width="1200px" height="250px" alt="Slide 1">
-    <img src="./image/Reminder poster hackathon Final.jpg" width="1200px" height="250px" alt="Slide 2">
-    <img src="https://via.placeholder.com/1200x550?text=Slide+3" width="1200px" height="250px" alt="Slide 3">  -->
+    <!-- <img src="./images/Version_2.jpg" alt="Slide 1"> -->
+    <!-- <img src="./images/Final_Poster1.jpg" alt="Slide 2"> -->
     <img src="https://via.placeholder.com/1200x400?text=Slide+1" alt="Slide 1">
     <img src="https://via.placeholder.com/1200x400?text=Slide+2" alt="Slide 2">
     <img src="https://via.placeholder.com/1200x400?text=Slide+3" alt="Slide 3">
@@ -718,6 +736,15 @@
         }
       });
     }
+    // let autoplayInterval;
+    // function startAutoplay() {
+    //   autoplayInterval = setInterval(nextSlide, 3000); // Change 3000 to the desired autoplay interval in milliseconds (e.g., 5000 for 5 seconds)
+    // }
+
+    // function stopAutoplay() {
+    //   clearInterval(autoplayInterval);
+    // }
+    // startAutoplay()
 
     document.querySelector(".grp-custom-button-next").addEventListener("click", nextSlide);
     document.querySelector(".grp-custom-button-prev").addEventListener("click", prevSlide);
