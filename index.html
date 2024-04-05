@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <title>SumTotal Design Prototype</title>
 <style>
   * {
@@ -609,8 +609,8 @@
     <img src="https://via.placeholder.com/1200x400?text=Slide+2" alt="Slide 2">
     <img src="https://via.placeholder.com/1200x400?text=Slide+3" alt="Slide 3">
   </div>
-    <button class="grp-custom-button grp-custom-button-prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-    <button class="grp-custom-button grp-custom-button-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+    <button class="grp-custom-button grp-custom-button-prev" id="grp-button-prev" aria-label="carouselpreviousbutton"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+    <button class="grp-custom-button grp-custom-button-next" id="grp-button-next" aria-label="carouselnextbutton"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
 </div>
 <div class="grp-indicators">
         <span class="grp-indicator active"></span>
@@ -660,18 +660,18 @@
     <div class="grp-carousel-scroll-wrap">
     <div class="grp-scroll-container">
         <div class="grp-scroll-carousel">
-            <div class="item"><img src="./images/edx.png"></div>
-            <div class="item"><img src="./images/Blue_And_Yellow_Simple_Book_Store_Logo-removebg-preview.png" height="200" width="200"></div>
-            <div class="item"><img src="./images/microsoft.png"></div>
-            <div class="item"><img src="./images/Learning Nugget logo New.png"></div>
-            <div class="item"><img src="./images/Picture10.png"></div>
-            <div class="item"><img src="./images/Picture5.png"></div>
-            <div class="item"><img src="./images/Picture9.png"></div>
-            <div class="item"><img src="./images/ted.png"></div>
+            <div class="item"><img src="./images/edx.png" alt="edxlogo"></div>
+            <div class="item"><img src="./images/Blue_And_Yellow_Simple_Book_Store_Logo-removebg-preview.png" alt="pageturnerslogo" height="200" width="200"></div>
+            <div class="item"><img src="./images/microsoft.png" alt="microsoftlogo"></div>
+            <div class="item"><img src="./images/Learning Nugget logo New.png" alt="learningnuggetlogo"></div>
+            <div class="item"><img src="./images/Picture10.png" alt="insightslogo"></div>
+            <div class="item"><img src="./images/Picture5.png" alt="awslogo"></div>
+            <div class="item"><img src="./images/Picture9.png" alt="azurelogo"></div>
+            <div class="item"><img src="./images/ted.png" alt="tedlogo"></div>
         </div>
     </div>
-        <button id="scroll-prev" class="scroll-btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-        <button id="scroll-next" class="scroll-btn"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        <button id="scroll-prev" class="scroll-btn" aria-label="scrollpreviousbutton"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+        <button id="scroll-next" class="scroll-btn" aria-label="scrollnextbutton"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
     </div>
     </div>
 </section>
