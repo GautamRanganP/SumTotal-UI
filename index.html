@@ -576,7 +576,7 @@
 <body>
 <header>
   <nav class="grp-nav">
-    <a href="/" class="logo"><img src="./images/Sonic-logo.jpg" width="36" height="36"></a>
+    <a href="/" class="logo" aria-label="sonic brand logo"><img src="./images/Sonic-logo.jpg" width="36" height="36" alt="soniclogo"></a>
     <!-- <i class="fa fa-bars" id="menu-bar" aria-hidden="true"></i>  -->
     <div class="grp-container" id="menu-bar" onclick="myFunction(this)">
       <div class="bar1"></div>
@@ -758,7 +758,8 @@
     const carouselScroll = document.querySelector(".grp-scroll-carousel");
     const scrollPrevBtn = document.getElementById("scroll-prev");
     const scrollNextBtn = document.getElementById("scroll-next");
-
+    let touchStartX = 0;
+let touchEndX = 0;
     // Function to check scroll availability and show/hide buttons
     function toggleScrollButtons() {
         scrollPrevBtn.style.display = carouselContainer.scrollLeft > 0 ? "block" : "none";
@@ -802,6 +803,24 @@
     }
 
     carouselContainer.addEventListener("scroll", toggleScrollButtons);
+// Touch events for touch-based scrolling
+carouselContainer.addEventListener("touchstart", function(event) {
+    touchStartX = event.touches[0].clientX;
+});
+
+carouselContainer.addEventListener("touchmove", function(event) {
+    touchEndX = event.touches[0].clientX;
+});
+
+carouselContainer.addEventListener("touchend", function(event) {
+    if (touchEndX < touchStartX) {
+        // Swipe left, scroll to next slide
+        scrollNextBtn.click();
+    } else if (touchEndX > touchStartX) {
+        // Swipe right, scroll to previous slide
+        scrollPrevBtn.click();
+    }
+});
 
     toggleScrollButtons();
     // window.addEventListener('resize', toggleScrollButtons)
