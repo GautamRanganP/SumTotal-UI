@@ -699,8 +699,6 @@
         <div class="grp-indicators-wrap">
           <div class="grp-carousel-container">
             <div class="grp-carousel">
-              <!-- <img src="./images/Version_2.jpg" alt="Slide 1"> -->
-              <!-- <img src="./images/Final_Poster1.jpg" alt="Slide 2"> -->
               <img src="./images/Final_Poster_1220X400.jpg" alt="Slide 1">
               <img src="./images/Reminder poster hackathon Final_resolution_1220X400.jpg" alt="Slide 2">
               <img src="./images/codesphere_1220X400.jpg" alt="Slide 3">
@@ -720,7 +718,7 @@
     </div>
 
     <div class="grp-quicklinks-header">
-      <h1>Quick Links</h1>
+      <h1>QUICK LINKS</h1>
       <div class="grp-quicklinks">
         <ul class="vertical-nav-menu">
           <li class="vertical-nav-list-items">
@@ -850,18 +848,26 @@
           }
         });
       }
-      // let autoplayInterval;
-      // function startAutoplay() {
-      //   autoplayInterval = setInterval(nextSlide, 3000); // Change 3000 to the desired autoplay interval in milliseconds (e.g., 5000 for 5 seconds)
-      // }
+      let autoplayInterval;
+      function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 5000); // Change 3000 to the desired autoplay interval in milliseconds (e.g., 5000 for 5 seconds)
+      }
 
-      // function stopAutoplay() {
-      //   clearInterval(autoplayInterval);
-      // }
-      // startAutoplay()
+      function stopAutoplay() {
+        clearInterval(autoplayInterval);
+      }
+      startAutoplay()
 
-      document.querySelector(".grp-custom-button-next").addEventListener("click", nextSlide);
-      document.querySelector(".grp-custom-button-prev").addEventListener("click", prevSlide);
+      document.querySelector(".grp-custom-button-next").addEventListener("click", ()=>{
+        stopAutoplay()
+        nextSlide()
+        startAutoplay()
+      });
+      document.querySelector(".grp-custom-button-prev").addEventListener("click", ()=>{
+        stopAutoplay()
+        prevSlide()
+        startAutoplay()
+      });
 
       indicators.forEach((indicator, index) => {
         indicator.addEventListener("click", function () {
