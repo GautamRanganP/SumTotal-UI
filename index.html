@@ -395,6 +395,14 @@
       overflow-x: hidden;
       white-space: nowrap;
     }
+    /* .grp-scroll-container::-webkit-scrollbar {
+      height: 8px; 
+  }
+
+  .grp-scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  } */
 
     .grp-scroll-carousel {
       display: inline-flex;
@@ -671,7 +679,7 @@
 <body>
   <header>
     <nav class="grp-nav">
-      <a href="/" class="logo" aria-label="sonic brand logo"><img src="./images/Sonic-logo.jpg" width="36" height="36"
+      <a href="#" class="logo" aria-label="sonic brand logo"><img src="./images/Sonic-logo.jpg" width="36" height="36"
           alt="soniclogo"></a>
       <!-- <i class="fa fa-bars" id="menu-bar" aria-hidden="true"></i>  -->
       <div class="grp-container" id="menu-bar" onclick="myFunction(this)">
@@ -805,11 +813,23 @@
     }
     const hamburger = document.querySelector('#menu-bar');
     const navLink = document.querySelector('.grp-nav__link');
+    const navbar = document.querySelector('.grp-nav');
 
     hamburger.addEventListener('click', () => {
       navLink.classList.toggle('hide');
       navLink.classList.toggle('show');
     });
+    document.body.addEventListener('click', function (event) {
+    // Check if the clicked element is not inside the mobile menu
+    if (!hamburger.contains(event.target) && !navbar.contains(event.target)) {
+      if(!navLink.classList.contains('hide')){
+      hamburger.classList.toggle("change");
+      navLink.classList.remove('show')
+      navLink.classList.add('hide');
+      // mobileMenu.classList.remove('open');
+      }
+    }
+  });
     document.addEventListener("DOMContentLoaded", function () {
       const carousel = document.querySelector(".grp-carousel");
       const slides = document.querySelectorAll(".grp-carousel img");
@@ -817,6 +837,8 @@
       const totalSlides = slides.length;
       let currentIndex = 0;
 
+  let startX = 0;
+  let endX = 0;
       function goToSlide(index) {
         carousel.style.transform = `translateX(-${index * 100}%)`;
         currentIndex = index;
@@ -868,6 +890,26 @@
         prevSlide()
         startAutoplay()
       });
+      carousel.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  carousel.addEventListener("touchmove", (e) => {
+    endX = e.touches[0].clientX;
+  });
+
+  carousel.addEventListener("touchend", () => {
+    const diffX = startX - endX;
+    if (diffX > 50) { // Adjust the threshold as needed
+      stopAutoplay();
+      nextSlide();
+      startAutoplay();
+    } else if (diffX < -50) { // Adjust the threshold as needed
+      stopAutoplay();
+      prevSlide();
+      startAutoplay();
+    }
+  });
 
       indicators.forEach((indicator, index) => {
         indicator.addEventListener("click", function () {
@@ -938,7 +980,19 @@
       }
 
       carouselContainer.addEventListener("scroll", toggleScrollButtons);
+      carouselContainer.addEventListener("touchstart", function (e) {
+    touchStartX = e.touches[0].clientX;
+  });
 
+  carouselContainer.addEventListener("touchmove", function (e) {
+    touchEndX = e.touches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    if (diffX > 10) { // Adjust the threshold as needed
+      scrollNextBtn.click();
+    } else if (diffX < -10) { // Adjust the threshold as needed
+      scrollPrevBtn.click();
+    }
+  });
 
       toggleScrollButtons();
       // window.addEventListener('resize', toggleScrollButtons)
