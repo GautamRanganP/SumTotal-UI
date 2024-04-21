@@ -407,6 +407,7 @@
     .grp-scroll-carousel {
       display: inline-flex;
       position: relative;
+      margin-bottom: 20px;
     }
 
     .item {
@@ -673,6 +674,33 @@
         max-width: 1278px;
       }
     }
+    .grp-custom-scrollbar {
+      width: 50%;
+      /* Adjust width as needed */
+      margin: 0px auto;
+      height: 4px;
+      /* Adjust height as needed */
+      background-color: #f0f0f0;
+      /* Adjust background color as needed */
+      border-radius: 5px;
+      /* Adjust border radius as needed */
+      position: relative;
+    }
+
+    .grp-custom-thumb {
+      width: 20px;
+      /* Adjust width of the thumb as needed */
+      height: 100%;
+      /* Set height equal to scrollbar height */
+      background-color: rgb(4, 92, 172);
+      /* Adjust thumb color as needed */
+      border-radius: 5px;
+      /* Adjust border radius to match scrollbar */
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -778,6 +806,9 @@
             <div class="item"><img src="./images/Picture9.png" alt="azurelogo"></div>
             <div class="item"><img src="./images/ted.png" alt="tedlogo"></div>
           </div>
+        </div>
+        <div class="grp-custom-scrollbar">
+          <div class="grp-custom-thumb" id="myThumb"></div>
         </div>
         <button id="scroll-prev" class="scroll-btn" aria-label="scrollpreviousbutton"><i class="fa fa-chevron-left"
             aria-hidden="true"></i></button>
@@ -920,35 +951,19 @@
       const carouselScroll = document.querySelector(".grp-scroll-carousel");
       const scrollPrevBtn = document.getElementById("scroll-prev");
       const scrollNextBtn = document.getElementById("scroll-next");
-
       let touchStartX = 0;
       let touchEndX = 0;
+      let startX1 = 0;
+      let scrollLeft = 0;
+      let isDragging = false;
       let isScrolling = false; // Flag to indicate whether scrolling is in progress
 
       // Function to check scroll availability and show/hide buttons
-      function toggleScrollButtons() {
-        scrollPrevBtn.style.display = carouselContainer.scrollLeft > 0 ? "block" : "none";
-        scrollNextBtn.style.display = Math.round(carouselContainer.scrollLeft + carouselContainer.offsetWidth) < carouselContainer.scrollWidth ? "block" : "none";
-      }
-
-      // Scroll to the previous block
-      scrollPrevBtn.addEventListener("click", function () {
-        if (!isScrolling) {
-          const itemWidth = getEffectiveItemWidth(carouselContainer);
-          const scrollAmount = itemWidth;
-          isScrolling = true;
-          carouselContainer.scrollBy({
-            left: -scrollAmount,
-            behavior: "smooth"
-          });
-          setTimeout(() => {
-            isScrolling = false;
-          }, 500); // Adjust delay as needed
-        }
-      });
-
-      // Scroll to the next block
-      scrollNextBtn.addEventListener("click", function () {
+      // function toggleScrollButtons() {
+      //   scrollPrevBtn.style.display = carouselContainer.scrollLeft > 0 ? "block" : "none";
+      //   scrollNextBtn.style.display = Math.round(carouselContainer.scrollLeft + carouselContainer.offsetWidth) < carouselContainer.scrollWidth ? "block" : "none";
+      // }
+      function goNextScroll(eventHandler) {
         if (!isScrolling) {
           const itemWidth = getEffectiveItemWidth(carouselContainer);
           const scrollAmount = itemWidth;
@@ -956,13 +971,51 @@
           const nextScrollAmount = Math.min(scrollAmount, remainingScroll);
           isScrolling = true;
           carouselContainer.scrollBy({
-            left: nextScrollAmount,
+            left: eventHandler === 'scroll' ? nextScrollAmount - 5 : nextScrollAmount,
             behavior: "smooth"
           });
+          if (carouselContainer.scrollLeft + carouselContainer.offsetWidth >= carouselScroll.scrollWidth) {
+            carouselContainer.scrollBy({
+              left: -carouselScroll.scrollWidth,
+              behavior: "smooth"
+            });
+          }
           setTimeout(() => {
             isScrolling = false;
           }, 500); // Adjust delay as needed
         }
+      }
+
+      function goPrevScroll(eventHandler) {
+        if (!isScrolling) {
+          const itemWidth = getEffectiveItemWidth(carouselContainer);
+          const scrollAmount = itemWidth;
+          isScrolling = true;
+          carouselContainer.scrollBy({
+            left: eventHandler === 'scroll' ? -scrollAmount + 5 : -scrollAmount,
+            behavior: "smooth"
+          });
+          if (carouselContainer.scrollLeft === 0) {
+            carouselContainer.scrollBy({
+              left: carouselScroll.scrollWidth - carouselContainer.offsetWidth,
+              behavior: "smooth"
+            });
+          }
+          setTimeout(() => {
+            isScrolling = false;
+          }, 500); // Adjust delay as needed
+        }
+      }
+
+
+      // Scroll to the previous block
+      scrollPrevBtn.addEventListener("click", function () {
+        goPrevScroll('btn')
+      });
+
+      // Scroll to the next block
+      scrollNextBtn.addEventListener("click", function () {
+        goNextScroll('btn')
       });
 
       // Function to calculate effective item width (considering margins, paddings, borders)
@@ -978,25 +1031,89 @@
         const borderRight = parseFloat(style.borderRightWidth);
         return itemWidth + marginLeft + marginRight + paddingLeft + paddingRight + borderLeft + borderRight;
       }
+      var scrollbar = document.querySelector('.grp-custom-scrollbar')
+      function handleLeftTrackClick(event) {
+        var clickX = event.clientX - scrollbar.getBoundingClientRect().left;
+        var scrollbarWidth = scrollbar.offsetWidth;
+        if (clickX < scrollbarWidth / 2) {
+          goPrevScroll('btn')
+        }
+      }
+      function handleRightTrackClick(event) {
+        var clickX = event.clientX - scrollbar.getBoundingClientRect().left;
+        var scrollbarWidth = scrollbar.offsetWidth;
+        if (clickX >= scrollbarWidth / 2) {
+          goNextScroll('btn')
+        }
+      }
 
-      carouselContainer.addEventListener("scroll", toggleScrollButtons);
+      scrollbar.addEventListener("click", handleLeftTrackClick);
+      scrollbar.addEventListener("click", handleRightTrackClick);
+      function updateThumbPosition() {
+        var winScroll = carouselContainer.scrollLeft;
+        var width = carouselContainer.scrollWidth - carouselContainer.clientWidth;
+        var scrollbarWidth = carouselContainer.clientWidth;
+        var scrollbar = document.querySelector('.grp-custom-scrollbar')
+
+        var thumbWidth = (scrollbarWidth / carouselContainer.scrollWidth) * 100;
+        var thumbPosition = (winScroll / width) * (100 - thumbWidth);
+
+        var thumb = document.getElementById("myThumb");
+        console.log("thumb", thumbWidth)
+        thumb.style.width = thumbWidth + "%";
+        thumb.style.left = thumbPosition + "%";
+        if (thumbWidth >= 100) {
+          scrollbar.style.display = "none";
+          scrollPrevBtn.style.display = "none"
+          scrollNextBtn.style.display = "none"
+        } else {
+          scrollbar.style.display = "block";
+          scrollPrevBtn.style.display = "block"
+          scrollNextBtn.style.display = "block"
+        }
+      }
+
+      carouselContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX1 = e.pageX - carouselContainer.offsetLeft;
+        scrollLeft = carouselContainer.scrollLeft;
+      });
+
+      carouselContainer.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
+
+      carouselContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - carouselContainer.offsetLeft;
+        const walk = x - startX1;
+        carouselContainer.scrollLeft = scrollLeft - walk;
+      });
+
+      carouselContainer.addEventListener("scroll", () => {
+        updateThumbPosition()
+      }
+      );
+
       carouselContainer.addEventListener("touchstart", function (e) {
-    touchStartX = e.touches[0].clientX;
-  });
+        touchStartX = e.touches[0].clientX;
+      });
 
-  carouselContainer.addEventListener("touchmove", function (e) {
-    touchEndX = e.touches[0].clientX;
-    const diffX = touchStartX - touchEndX;
-    if (diffX > 10) { // Adjust the threshold as needed
-      scrollNextBtn.click();
-    } else if (diffX < -10) { // Adjust the threshold as needed
-      scrollPrevBtn.click();
-    }
-  });
-
-      toggleScrollButtons();
-      // window.addEventListener('resize', toggleScrollButtons)
-      // window.addEventListener('resize', toggleScrollButtons)
+      carouselContainer.addEventListener("touchmove", function (e) {
+        touchEndX = e.touches[0].clientX;
+        const diffX = touchStartX - touchEndX;
+        if (diffX > 10) { // Adjust the threshold as needed
+          scrollNextBtn.click();
+        } else if (diffX < -10) { // Adjust the threshold as needed
+          scrollPrevBtn.click();
+        }
+      });
+      window.addEventListener('resize', () => {
+        updateThumbPosition()
+      }
+      )
+      updateThumbPosition()
     });
 
   </script>
