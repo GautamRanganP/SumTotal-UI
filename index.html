@@ -187,8 +187,8 @@
     .grp-indicators {
       text-align: center;
       width: 100%;
-      position: absolute;
-      bottom: -25px;
+      /* position: absolute;
+      bottom: -25px; */
     }
 
     .grp-indicator {
@@ -381,8 +381,8 @@
     }
 
     .grp-indicators-wrap {
-      position: relative;
-
+      display: flex;
+      flex-direction: column;
     }
 
     .grp-scroll-container {
@@ -516,9 +516,9 @@
         font-size: 14px;
       }
 
-      .grp-indicators {
+      /* .grp-indicators {
         bottom: -18px;
-      }
+      } */
 
       .grp-indicator {
         margin: 0 3px;
@@ -735,7 +735,7 @@
       <h1>LOOK WHAT'S NEW !</h1>
       <div class="grp-padding">
         <div class="grp-indicators-wrap">
-          <div style="display: flex;">
+          <div style="display: flex;margin-bottom: 5px;">
             <button class="grp-custom-button grp-custom-button-prev" id="grp-button-prev"
           aria-label="carouselpreviousbutton"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
           <div class="grp-carousel-container">
