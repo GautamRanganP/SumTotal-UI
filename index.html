@@ -143,7 +143,6 @@
     }
 
     .grp-carousel-container {
-      position: relative;
       width: 100%;
       overflow: hidden;
     }
@@ -156,7 +155,7 @@
     .grp-carousel img {
       min-width: 100%;
       width: 100%;
-      object-fit: contain;
+      /* object-fit: contain; */
     }
 
     @media screen and (min-width: 1400px) {
@@ -171,11 +170,9 @@
 
     .grp-custom-button {
       background-color: transparent;
-      opacity: .1;
-      position: absolute;
-      top: 0;
-      height: 100%;
-      /* color: white; */
+      display: flex;
+      min-height: 100%;
+      align-items: center;
       color: rgb(4, 92, 172);
       border: none;
       padding: 10px 20px;
@@ -369,6 +366,7 @@
     }
 
     .grp-carousel-container {
+      display: flex;
       /* margin-top: 12px; */
     }
 
@@ -733,17 +731,19 @@
       <h1>LOOK WHAT'S NEW !</h1>
       <div class="grp-padding">
         <div class="grp-indicators-wrap">
+          <div style="display: flex;">
+            <button class="grp-custom-button grp-custom-button-prev" id="grp-button-prev"
+          aria-label="carouselpreviousbutton"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
           <div class="grp-carousel-container">
             <div class="grp-carousel">
               <img src="./images/Final_Poster_1220X400.jpg" alt="Slide 1">
               <img src="./images/Reminder poster hackathon Final_resolution_1220X400.jpg" alt="Slide 2">
               <img src="./images/codesphere_1220X400.jpg" alt="Slide 3">
             </div>
-            <button class="grp-custom-button grp-custom-button-prev" id="grp-button-prev"
-              aria-label="carouselpreviousbutton"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-            <button class="grp-custom-button grp-custom-button-next" id="grp-button-next"
-              aria-label="carouselnextbutton"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
           </div>
+        <button class="grp-custom-button grp-custom-button-next" id="grp-button-next"
+          aria-label="carouselnextbutton"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
           <div class="grp-indicators">
             <span class="grp-indicator active"></span>
             <span class="grp-indicator"></span>
@@ -797,14 +797,18 @@
         <div class="grp-scroll-container">
           <div class="grp-scroll-carousel">
             <div class="item"><img src="./images/edx.png" alt="edxlogo"></div>
-            <div class="item"><img src="./images/Blue_And_Yellow_Simple_Book_Store_Logo-removebg-preview.png"
-                alt="pageturnerslogo" height="200" width="200"></div>
+            <!-- <div class="item"><img src="./images/Blue_And_Yellow_Simple_Book_Store_Logo-removebg-preview.png"
+                alt="pageturnerslogo" height="200" width="200"></div> -->
             <div class="item"><img src="./images/microsoft.png" alt="microsoftlogo"></div>
             <div class="item"><img src="./images/Learning Nugget logo New.png" alt="learningnuggetlogo"></div>
             <div class="item"><img src="./images/Picture10.png" alt="insightslogo"></div>
             <div class="item"><img src="./images/Picture5.png" alt="awslogo"></div>
             <div class="item"><img src="./images/Picture9.png" alt="azurelogo"></div>
             <div class="item"><img src="./images/ted.png" alt="tedlogo"></div>
+            <div class="item"><img src="./images/Page-Turner-Logo.jpg"
+              alt="pageturnerslogo" height="200" width="200"></div>
+              <div class="item"><img src="./images/Logo-White.jpg"
+                alt="Genailogo" height="200" width="200"></div>
           </div>
         </div>
         <div class="grp-custom-scrollbar">
